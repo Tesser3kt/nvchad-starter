@@ -8,6 +8,7 @@ local options = {
     python = { "black" },
     tex = { "tex-fmt" },
     typst = { "typstyle" },
+    nix = { "alejandra" },
   },
 
   format_on_save = {

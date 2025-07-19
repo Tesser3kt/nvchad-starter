@@ -12,7 +12,7 @@ local servers = {
   "jsonls",
   "lua_ls",
   "marksman",
-  "nixd",
+  "nil",
   "pylsp",
   "sqls",
   "tailwindcss",
