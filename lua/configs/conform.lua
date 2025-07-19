@@ -6,6 +6,8 @@ local options = {
     js = { "prettierd" },
     ts = { "prettierd" },
     python = { "black" },
+    tex = { "tex-fmt" },
+    typst = { "typstyle" },
   },
 
   format_on_save = {
