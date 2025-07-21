@@ -4,11 +4,11 @@ return {
     cmd = "Copilot",
     event = "InsertEnter",
     name = "copilot",
-    enabled = false,
+    enabled = true,
     config = function()
       require("copilot").setup {
         panel = {
-          enabled = true,
+          enabled = false,
           auto_refresh = true,
           keymap = {
             jump_prev = "[[",
@@ -23,7 +23,7 @@ return {
           },
         },
         suggestion = {
-          enabled = true,
+          enabled = false,
           auto_trigger = true,
           debounce = 75,
           keymap = {

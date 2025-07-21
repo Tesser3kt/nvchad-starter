@@ -17,11 +17,6 @@ return {
             luasnip.lsp_expand(args.body)
           end
 
-          if not opts.sources then
-            opts.sources = {}
-          end
-          table.insert(opts.sources, { name = "luasnip", priority = 2000 })
-
           if not opts.mappings then
             opts.mappings = {}
           end
