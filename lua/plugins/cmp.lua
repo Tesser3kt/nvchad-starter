@@ -8,10 +8,6 @@ return {
           priority = 2000,
         },
         {
-          name = "copilot",
-          priority = 1500,
-        },
-        {
           name = "nvim_lsp",
           priority = 1000,
         },
