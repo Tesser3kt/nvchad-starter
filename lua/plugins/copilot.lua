@@ -11,7 +11,8 @@ return {
           enabled = false,
         },
         suggestion = {
-          enabled = false,
+          enabled = true,
+          auto_trigger = false,
         },
         filetypes = {
           yaml = false,
