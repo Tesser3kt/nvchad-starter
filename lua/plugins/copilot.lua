@@ -4,7 +4,7 @@ return {
     cmd = "Copilot",
     event = "InsertEnter",
     name = "copilot",
-    enabled = false,
+    enabled = true,
     config = function()
       require("copilot").setup {
         panel = {
