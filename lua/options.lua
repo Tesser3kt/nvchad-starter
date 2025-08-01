@@ -27,3 +27,10 @@ g.tex_subscripts = 1
 g.nvda_listen_address = os.getenv "NVIM_LISTEN_ADDRESS" or "/tmp/nvimsocket"
 fn.setenv("NVIM_LISTEN_ADDRESS", g.nvda_listen_address)
 fn.setenv("VIMTEX_SERVER_ADDRESS", g.nvda_listen_address)
+
+-- Set global typst options
+g.typst_pdf_viewer = "zathura"
+g.typst_conceal = 1
+g.typst_conceal_math = 1
+g.typst_conceal_emoji = 1
+g.typst_folding = 1
