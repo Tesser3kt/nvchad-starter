@@ -2,6 +2,12 @@ require "nvchad.autocmds"
 
 local autocmd = vim.api.nvim_create_autocmd
 
+-- Enable cursorline
+autocmd("BufEnter", {
+  pattern = "*",
+  command = "highlight link CursorLine CursorLineNr",
+})
+
 -- TeX local settings
 autocmd({ "BufNewFile", "BufRead" }, {
   pattern = { "*.tex", "*.bib" },
