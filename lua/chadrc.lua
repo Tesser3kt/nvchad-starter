@@ -7,12 +7,6 @@ local M = {}
 
 M.base46 = {
   theme = "onenord",
-
-  hl_override = {
-    CursorLine = {
-      bg = "grey",
-    },
-  },
 }
 
 -- M.nvdash = { load_on_startup = true }
