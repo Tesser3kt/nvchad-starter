@@ -15,7 +15,6 @@ g.vimtex_compiler_latexmk_engines = {
 }
 g.vimtex_view_method = "zathura"
 g.vimtex_view_general_viewer = "zathura"
-g.vimtex_compiler_progname = "nvr"
 g.vimtex_fold_enabled = 1
 g.vimtex_format_enabled = 1
 g.tex_conceal = "abdgm"
