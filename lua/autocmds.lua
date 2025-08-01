@@ -6,7 +6,7 @@ local autocmd = vim.api.nvim_create_autocmd
 autocmd({ "BufNewFile", "BufRead" }, {
   pattern = { "*.tex", "*.bib" },
   callback = function()
-    vim.opt_local.shiftwidth = 1
+    vim.opt_local.shiftwidth = 2
     vim.opt_local.spell = true
     vim.opt_local.spelllang = "csa"
     vim.opt_local.textwidth = 80
