@@ -5,6 +5,7 @@ return {
     cmd = { "VimtexCompile" },
     keys = {
       { "<leader>vc", "<cmd>VimtexCompile<cr>", desc = "Compile opened LaTeX file." },
+      { "<leader>vv", "<cmd>VimtexView<cr>", desc = "View compiled LaTeX file." },
     }
   }
 }
