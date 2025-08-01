@@ -11,6 +11,6 @@ g.lua_snippets_path = "~/.config/nvim/snippets/"
 
 -- Set global VimTex options
 g.vimtex_compiler_latexmk_engines = {
-  ["_"] = "-lualatex",
+  ["_"] = "-pdf",
 }
 g.vimtex_view_method = "zathura"
