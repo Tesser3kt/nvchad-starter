@@ -1,8 +1,10 @@
-require('reticle').setup {
-    -- Enable/Disable the cursorline and/or cursorcolumn at startup
+return {
+  "tummetott/reticle.nvim",
+  event = "VeryLazy",
+  opts = {
     on_startup = {
-        cursorline = true,
-        cursorcolumn = false,
+      cursorline = true,
+      cursorcolumn = false,
     },
 
     -- Disable the cursorline and cursorcolumn in insert mode
@@ -21,35 +23,35 @@ require('reticle').setup {
     -- the active window, thus following your active window. This setting is
     -- overruled by the following settings concerning special filetypes.
     follow = {
-        cursorline = true,
-        cursorcolumn = true,
+      cursorline = true,
+      cursorcolumn = true,
     },
 
     -- Specify filetypes where the cursorline and/or cursorcolumn are always
     -- enabled, regardless of the global setting.
     always = {
-        cursorline = {},
-        cursorcolumn = {},
+      cursorline = {},
+      cursorcolumn = {},
     },
 
     -- Specify filetypes where the cursorline and/or cursorcolumn are always
     -- enabled when the window is focused, regardless of the global setting.
     on_focus = {
-        cursorline = {},
-        cursorcolumn = {},
+      cursorline = {},
+      cursorcolumn = {},
     },
 
     -- Define filetypes which are ignored by the plugin
     ignore = {
-        cursorline = {
-            'DressingInput',
-            'FTerm',
-            'NvimSeparator',
-            'NvimTree',
-            'TelescopePrompt',
-            'Trouble',
-        },
-        cursorcolumn = {},
+      cursorline = {
+        "DressingInput",
+        "FTerm",
+        "NvimSeparator",
+        "NvimTree",
+        "TelescopePrompt",
+        "Trouble",
+      },
+      cursorcolumn = {},
     },
 
     -- Specify filetypes where the cursorline and/or cursorcolumn should be
@@ -59,7 +61,8 @@ require('reticle').setup {
     -- disabling them. By adding these filetypes to the 'never' table, you
     -- can override the plugin's settings and turn off these features.
     never = {
-        cursorline = {},
-        cursorcolumn = {},
+      cursorline = {},
+      cursorcolumn = {},
     },
+  },
 }
