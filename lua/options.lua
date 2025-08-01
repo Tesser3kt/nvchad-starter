@@ -1,12 +1,12 @@
 require "nvchad.options"
 
--- add yours here!
-
 local o = vim.o
+local g = vim.g
+local fn = vim.fn
+
 o.cursorlineopt = "both" -- to enable cursorline!
 
 -- Add luasnip snippets
-local g = vim.g
 g.lua_snippets_path = "~/.config/nvim/snippets/"
 
 -- Set global VimTex options
@@ -23,3 +23,8 @@ g.conceallevel = 2
 g.tex_conceal_frac = 1
 g.tex_superscripts = 1
 g.tex_subscripts = 1
+
+-- Inherit $NVIM_LISTEN_ADDRESS from the environment
+g.nvda_listen_address = os.getenv "NVIM_LISTEN_ADDRESS" or "/tmp/nvimsocket"
+fn.setenv("NVIM_LISTEN_ADDRESS", g.nvda_listen_address)
+fn.setenv("VIMTEX_SERVER_ADDRESS", g.nvda_listen_address)
