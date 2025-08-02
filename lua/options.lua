@@ -15,8 +15,7 @@ g.vimtex_compiler_latexmk_engines = {
 }
 g.vimtex_view_method = "zathura"
 g.vimtex_view_general_viewer = "zathura"
-g.vimtex_compiler_progname = "nvr"
-g.vimtex_callback_progpath = "/etc/profiles/per-user/tesserekt/bin/nvr"
+g.vimtex_callback_progpath = "/etc/profiles/per-user/tesserekt/bin/nvim"
 g.vimtex_fold_enabled = 1
 g.vimtex_format_enabled = 1
 g.tex_conceal = "abdgm"
@@ -24,11 +23,6 @@ g.conceallevel = 2
 g.tex_conceal_frac = 1
 g.tex_superscripts = 1
 g.tex_subscripts = 1
-
--- Inherit $NVIM_LISTEN_ADDRESS from the environment
-g.nvda_listen_address = os.getenv "NVIM_LISTEN_ADDRESS" or "/tmp/nvimsocket"
-fn.setenv("NVIM_LISTEN_ADDRESS", g.nvda_listen_address)
-fn.setenv("VIMTEX_SERVER_ADDRESS", g.nvda_listen_address)
 
 -- Set global typst options
 g.typst_pdf_viewer = "zathura"
