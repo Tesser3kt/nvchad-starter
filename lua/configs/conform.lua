@@ -9,6 +9,9 @@ local options = {
     tex = { "tex-fmt" },
     typst = { "typstyle" },
     nix = { "alejandra" },
+    arduino = { "clang-format" },
+    c = { "clang-format" },
+    cpp = { "clang-format" },
   },
 
   format_on_save = {

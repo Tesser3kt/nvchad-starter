@@ -19,6 +19,7 @@ local servers = {
   "texlab",
   "ts_ls",
   "tinymist",
+  "arduino-language-server",
 }
 vim.lsp.enable(servers)
 
