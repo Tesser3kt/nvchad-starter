@@ -45,3 +45,12 @@ autocmd({ "BufNewFile", "BufRead" }, {
     vim.opt_local.colorcolumn = "81"
   end,
 })
+
+-- Disable semantic tokens for arduino
+autocmd("LspAttach", {
+  pattern = "arduino-language-server",
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    client.server_capabilities.semanticTokensProvider = nil
+  end,
+})
