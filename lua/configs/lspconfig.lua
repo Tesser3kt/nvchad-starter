@@ -24,7 +24,7 @@ local servers = {
 vim.lsp.enable(servers)
 
 -- read :h vim.lsp.config for changing options of lsp servers
-local MY_FQBN = "Inkplate_Boards:esp32:Inkplate10V2"
+local MY_FQBN = "arduino:avr:nano"
 vim.lsp.config("arduino-language-server", {
   cmd = {
     "arduino-language-server",
