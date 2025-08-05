@@ -1,0 +1,2 @@
+board_manager:
+    additional_urls: ["https://github.com/SolderedElectronics/Dasduino-Board-Definitions-for-Arduino-IDE/raw/master/package_Dasduino_Boards_index.json"]
