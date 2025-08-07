@@ -1,6 +1,7 @@
 return {
   {
     "glebzlat/arduino-nvim",
+    event = "BufReadPre *.ino",
     config = {
       function()
         require("arduino-nvim").setup {
