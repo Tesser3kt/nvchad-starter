@@ -35,3 +35,8 @@ require "autocmds"
 vim.schedule(function()
   require "mappings"
 end)
+
+-- Disable autopairs for LaTeX
+require('nvim-autopairs').setup({
+  disable_filetype = { "tex", "latex" },
+})
