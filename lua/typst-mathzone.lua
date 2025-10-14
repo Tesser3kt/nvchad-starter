@@ -1,57 +1,73 @@
+-- lua/typst_mathzone.lua
 local M = {}
 
--- Detect if cursor is inside Typst math ($...$ or $[ ... ]$)
+-- true iff cursor is inside Typst math: $...$ or $[ ... ]$
 M.in_typst_math = function()
   if vim.bo.filetype ~= "typst" then return false end
 
-  -- Try Tree-sitter first
-  local ok, parser = pcall(vim.treesitter.get_parser, 0, "typst")
-  if ok and parser then
-    local node = vim.treesitter.get_node({buf=0})
-    while node do
-      local t = node:type()
-      -- Future-proof: check common math node names
-      if t == "math" or t == "math_inline" or t == "math_block" then
-        return true
-      end
-      node = node:parent()
-    end
-  end
-
-  -- Fallback (see option 2 below)
-  return M.in_typst_math_fallback()
-end
-
--- Heuristic fallback (regex; also used if TS missing)
-M.in_typst_math_fallback = function()
   local row, col = unpack(vim.api.nvim_win_get_cursor(0))
   row = row - 1
-  local line = vim.api.nvim_get_current_line()
+  local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+  local cur = lines[row + 1] or ""
 
-  -- Inline $...$
-  local before = line:sub(1, col)
-  local after  = line:sub(col + 1)
-  local n_before = select(2, before:gsub("%$", ""))
-  local n_after  = select(2, after:gsub("%$", ""))
-  if (n_before % 2 == 1) and (n_after % 2 == 1) then
+  -- quick ignore: comment start before cursor ("// ...")
+  do
+    local cpos = cur:find("//", 1, true)
+    if cpos and cpos - 1 <= col then return false end
+  end
+
+  -- 1) Block math: inside an unmatched "$[" … "]$" region at the cursor?
+  local function block_depth_upto(r, c)
+    local depth = 0
+    for i = 0, r do
+      local line = lines[i + 1] or ""
+      local upto = (i == r) and c or #line
+      local j = 1
+      while true do
+        local o = line:find("%$%[", j)   -- "$["
+        local k = line:find("%]%$", j)   -- "]$"
+        if (not o or o > upto) and (not k or k > upto) then break end
+        if k and (not o or k < o) and k <= upto then
+          depth = math.max(0, depth - 1)
+          j = k + 2
+        elseif o and o <= upto then
+          depth = depth + 1
+          j = o + 2
+        else
+          break
+        end
+      end
+    end
+    return depth
+  end
+
+  if block_depth_upto(row, col) > 0 then
     return true
   end
 
-  -- Block $[ ... ]$ (search surrounding lines)
-  local lines = vim.api.nvim_buf_get_lines(0, 0, -1, true)
-  local open_seen = false
-  for r = row, 0, -1 do
-    if lines[r + 1]:find("%]%$") then break end
-    if lines[r + 1]:find("%$%[") then open_seen = true; break end
-  end
-  if open_seen then
-    for r = row, #lines - 1 do
-      if lines[r + 1]:find("%]%$") then return true end
-      if lines[r + 1]:find("%$%[") and r ~= row then return true end
+  -- 2) Inline math on the current line: between two plain "$"
+  -- Count plain "$" (not part of "$[" or "]$") on each side of the cursor.
+  local left  = cur:sub(1, col)
+  local right = cur:sub(col + 1)
+
+  local function count_plain_dollars(s)
+    local n, i = 0, 1
+    while true do
+      local j = s:find("%$", i)
+      if not j then break end
+      local prev = s:sub(j - 1, j - 1)
+      local nextc = s:sub(j + 1, j + 1)
+      local part_of_block = (nextc == "[") or (prev == "]")
+      if not part_of_block then n = n + 1 end
+      i = j + 1
     end
+    return n
   end
 
-  return false
+  local nL = count_plain_dollars(left)
+  local nR = count_plain_dollars(right)
+
+  return (nL % 2 == 1) and (nR % 2 == 1)
 end
 
 return M
