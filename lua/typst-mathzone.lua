@@ -1,73 +1,60 @@
 -- lua/typst_mathzone.lua
 local M = {}
 
--- true iff cursor is inside Typst math: $...$ or $[ ... ]$
+-- True iff cursor is inside Typst math:
+--   1) $[ ... ]$   (block)
+--   2) $ ... $     (plain-dollar block that may span lines)
+--   3) $...$       (inline, possibly wrapped across lines)
 M.in_typst_math = function()
   if vim.bo.filetype ~= "typst" then return false end
 
   local row, col = unpack(vim.api.nvim_win_get_cursor(0))
   row = row - 1
-  local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
-  local cur = lines[row + 1] or ""
 
-  -- quick ignore: comment start before cursor ("// ...")
-  do
-    local cpos = cur:find("//", 1, true)
-    if cpos and cpos - 1 <= col then return false end
+  local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+
+  local function cut_at_comment(s, upto)
+    -- consider only text up to 'upto' and before // comment
+    s = s:sub(1, upto)
+    local cpos = s:find("//", 1, true)
+    if cpos then s = s:sub(1, cpos - 1) end
+    return s
   end
 
-  -- 1) Block math: inside an unmatched "$[" … "]$" region at the cursor?
-  local function block_depth_upto(r, c)
-    local depth = 0
-    for i = 0, r do
-      local line = lines[i + 1] or ""
-      local upto = (i == r) and c or #line
-      local j = 1
-      while true do
-        local o = line:find("%$%[", j)   -- "$["
-        local k = line:find("%]%$", j)   -- "]$"
-        if (not o or o > upto) and (not k or k > upto) then break end
-        if k and (not o or k < o) and k <= upto then
-          depth = math.max(0, depth - 1)
-          j = k + 2
-        elseif o and o <= upto then
-          depth = depth + 1
-          j = o + 2
-        else
-          break
+  local block_depth = 0   -- nesting count of $[ ... ]$
+  local dollar_parity = 0 -- parity of plain '$' (not part of $[ or ]$)
+
+  for i = 0, row do
+    local line = lines[i + 1] or ""
+    local upto = (i == row) and col or #line
+    line = cut_at_comment(line, upto)
+
+    local j = 1
+    while j <= #line do
+      local a = line:sub(j, j + 1)
+      if a == "$[" then
+        block_depth = block_depth + 1
+        j = j + 2
+      elseif a == "]$" then
+        if block_depth > 0 then block_depth = block_depth - 1 end
+        j = j + 2
+      else
+        local ch = line:sub(j, j)
+        if ch == "$" then
+          -- count as "plain" $ only if not part of $[ or ]$ (already handled)
+          dollar_parity = 1 - dollar_parity
         end
+        j = j + 1
       end
     end
-    return depth
   end
 
-  if block_depth_upto(row, col) > 0 then
-    return true
-  end
+  -- Inside a $[ ... ]$ block?
+  if block_depth > 0 then return true end
 
-  -- 2) Inline math on the current line: between two plain "$"
-  -- Count plain "$" (not part of "$[" or "]$") on each side of the cursor.
-  local left  = cur:sub(1, col)
-  local right = cur:sub(col + 1)
-
-  local function count_plain_dollars(s)
-    local n, i = 0, 1
-    while true do
-      local j = s:find("%$", i)
-      if not j then break end
-      local prev = s:sub(j - 1, j - 1)
-      local nextc = s:sub(j + 1, j + 1)
-      local part_of_block = (nextc == "[") or (prev == "]")
-      if not part_of_block then n = n + 1 end
-      i = j + 1
-    end
-    return n
-  end
-
-  local nL = count_plain_dollars(left)
-  local nR = count_plain_dollars(right)
-
-  return (nL % 2 == 1) and (nR % 2 == 1)
+  -- Inside a plain-dollar math region ($ ... $ or wrapped $...$)?
+  -- Odd parity up to the cursor means we've seen an opening $ with no closing $ yet.
+  return dollar_parity == 1
 end
 
 return M
