@@ -23,3 +23,26 @@ local servers = {
 vim.lsp.enable(servers)
 
 -- read :h vim.lsp.config for changing options of lsp servers
+
+-- Ccls settings
+vim.lsp.config.ccls = {
+  cmd = { "ccls" },
+  filetypes = { "c", "cpp", "objc", "objcpp" },
+  root_dir = vim.lsp.util.root_pattern("compile_commands.json", "compile_flags.txt", ".git"),
+  settings = {
+    ccls = {
+      cache = {
+        directory = ".ccls-cache",
+      },
+      highlight = {
+        lsRanges = true,
+      },
+    },
+  },
+  lsp = {
+    codelens = {
+      enable = true,
+      events = { "BufWritePost", "InsertLeave" },
+    },
+  },
+}
