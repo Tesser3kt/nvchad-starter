@@ -25,7 +25,7 @@ vim.lsp.enable(servers)
 -- Clangd setup
 require("nvchad.configs.lspconfig").defaults()
 
-vim.lsp.config.clangd.setup {
+vim.lsp.config.clangd = {
   cmd = {
     "clangd",
     "--query-driver=/nix/store/*-gcc-*/bin/*",
