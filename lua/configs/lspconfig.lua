@@ -19,6 +19,7 @@ local servers = {
   "texlab",
   "ts_ls",
   "tinymist",
+  "qmlls"
 }
 vim.lsp.enable(servers)
 
