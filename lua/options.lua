@@ -30,3 +30,4 @@ g.typst_conceal = 1
 g.typst_conceal_math = 1
 g.typst_conceal_emoji = 1
 g.typst_folding = 1
+

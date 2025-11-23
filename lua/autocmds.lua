@@ -45,3 +45,12 @@ autocmd({ "BufNewFile", "BufRead" }, {
     vim.opt_local.colorcolumn = "81"
   end,
 })
+
+-- QML local settings
+autocmd({ "BufNewFile", "BufRead" }, {
+  pattern = "*.qml",
+  callback = function()
+    vim.opt_local.shiftwidth = 4
+    vim.opt_local.tabstop = 4
+  end,
+})
