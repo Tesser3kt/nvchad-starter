@@ -4,7 +4,7 @@ local servers = {
   "html",
   "cssls",
   "bashls",
-  "ccls",
+  "clangd",
   "docker_compose_language_service",
   "dockerls",
   "emmet_language_server",
@@ -19,7 +19,18 @@ local servers = {
   "texlab",
   "ts_ls",
   "tinymist",
+  "qmlls"
 }
 vim.lsp.enable(servers)
 
--- read :h vim.lsp.config for changing options of lsp servers
+-- Clangd setup
+require("nvchad.configs.lspconfig").defaults()
+
+vim.lsp.config.clangd = {
+  cmd = {
+    "clangd",
+    "--query-driver=/nix/store/*-gcc-*/bin/*",
+    "--compile-commands-dir=build", -- optional if you symlinked to root
+  },
+  capabilities = require("nvchad.configs.lspconfig").capabilities,
+}
