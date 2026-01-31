@@ -12,7 +12,7 @@ local options = {
     arduino = { "clang-format" },
     c = { "clang-format" },
     cpp = { "clang-format" },
-    haskell = { "hlint" },
+    haskell = { "ormolu" },
   },
 
   format_on_save = {
