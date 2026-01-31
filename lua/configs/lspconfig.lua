@@ -20,7 +20,7 @@ local servers = {
   "ts_ls",
   "tinymist",
   "qmlls",
-  "haskell_language_server"
+  "hls"
 }
 vim.lsp.enable(servers)
 
