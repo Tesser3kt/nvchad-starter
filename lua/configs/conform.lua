@@ -12,6 +12,7 @@ local options = {
     arduino = { "clang-format" },
     c = { "clang-format" },
     cpp = { "clang-format" },
+    haskell = { "hlint" },
   },
 
   format_on_save = {
