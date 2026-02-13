@@ -54,3 +54,12 @@ autocmd({ "BufNewFile", "BufRead" }, {
     vim.opt_local.tabstop = 4
   end,
 })
+
+-- Disable treesitter for tex and latex
+autocmd("FileType", {
+  pattern = { "tex", "plaintex", "latex" },
+  callback = function()
+    pcall(vim.treesitter.stop)  -- stop TS highlighting if it started
+  end,
+})
+
