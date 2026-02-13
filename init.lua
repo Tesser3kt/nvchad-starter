@@ -46,3 +46,11 @@ require("luasnip").config.set_config {
   enable_autosnippets = true,
   store_selection_keys = "<Tab>",
 }
+
+-- Disable treesitter for tex and latex
+require("nvim-treesitter.configs").setup {
+  highlight = {
+    enable = true,
+    disable = { "tex", "latex" },
+  },
+}
