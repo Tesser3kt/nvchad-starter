@@ -37,12 +37,20 @@ vim.schedule(function()
 end)
 
 -- Disable autopairs for LaTeX
-require('nvim-autopairs').setup({
+require("nvim-autopairs").setup {
   disable_filetype = { "tex", "latex" },
-})
+}
 
 -- Enable autosnippets
 require("luasnip").config.set_config {
   enable_autosnippets = true,
   store_selection_keys = "<Tab>",
+}
+
+-- Disable treesitter for tex and latex
+require("nvim-treesitter.configs").setup {
+  highlight = {
+    enable = true,
+    disable = { "tex", "latex" },
+  },
 }
