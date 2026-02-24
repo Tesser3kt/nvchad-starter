@@ -20,7 +20,7 @@ local servers = {
   "ts_ls",
   "tinymist",
   "qmlls",
-  "hls"
+  "hls",
 }
 vim.lsp.enable(servers)
 
@@ -32,6 +32,20 @@ vim.lsp.config.clangd = {
     "clangd",
     "--query-driver=/nix/store/*-gcc-*/bin/*",
     "--compile-commands-dir=build", -- optional if you symlinked to root
+  },
+  capabilities = require("nvchad.configs.lspconfig").capabilities,
+}
+
+-- PyLSP setup
+vim.lsp.config.pylsp = {
+  settings = {
+    pylsp = {
+      plugins = {
+        pycodestyle = {
+          maxLineLength = 88,
+        },
+      },
+    },
   },
   capabilities = require("nvchad.configs.lspconfig").capabilities,
 }
