@@ -6,6 +6,11 @@ local fn = vim.fn
 
 o.cursorlineopt = "both" -- to enable cursorline!
 
+-- Use Neovim's internal registers for yank/delete/paste.
+-- System clipboard (e.g. text copied from browser) stays separate.
+-- Use "+y / "+p (or the mappings below) to explicitly cross the boundary.
+o.clipboard = ""
+
 -- Add luasnip snippets
 g.lua_snippets_path = "~/.config/nvim/snippets/"
 

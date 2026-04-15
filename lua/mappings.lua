@@ -5,6 +5,12 @@ require "nvchad.mappings"
 local map = vim.keymap.set
 
 map("n", ";", ":", { desc = "CMD enter command mode" })
+
+-- System clipboard access (separate from internal yank register)
+map({ "n", "v" }, "<leader>y", '"+y', { desc = "Yank to system clipboard" })
+map("n", "<leader>Y", '"+Y', { desc = "Yank line to system clipboard" })
+map({ "n", "v" }, "<leader>p", '"+p', { desc = "Paste from system clipboard" })
+map({ "n", "v" }, "<leader>P", '"+P', { desc = "Paste before from system clipboard" })
 map("t", "<Esc>", "<C-\\><C-n>", { desc = "Exit terminal" })
 map("i", "<C-l>", "<c-g>u<Esc>[s1z=`]a<c-g>u", { desc = "Correct last spelling mistake." })
 -- map("i", "jk", "<ESC>")
