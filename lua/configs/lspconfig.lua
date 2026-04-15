@@ -18,6 +18,7 @@ local servers = {
   "tailwindcss",
   "texlab",
   "ts_ls",
+  "svelte",
   "tinymist",
   "qmlls",
   "hls",
@@ -34,6 +35,20 @@ vim.lsp.config.clangd = {
     "--compile-commands-dir=build", -- optional if you symlinked to root
   },
   capabilities = require("nvchad.configs.lspconfig").capabilities,
+}
+
+-- Svelte setup (TypeScript-first for SvelteKit)
+vim.lsp.config.svelte = {
+  capabilities = require("nvchad.configs.lspconfig").capabilities,
+  settings = {
+    svelte = {
+      plugin = {
+        svelte = {
+          defaultScriptLanguage = "ts",
+        },
+      },
+    },
+  },
 }
 
 -- PyLSP setup
