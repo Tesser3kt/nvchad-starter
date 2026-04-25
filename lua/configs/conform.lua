@@ -14,6 +14,7 @@ local options = {
     c = { "clang-format" },
     cpp = { "clang-format" },
     haskell = { "ormolu" },
+    rust = { "rustfmt" },
   },
 
   format_on_save = {

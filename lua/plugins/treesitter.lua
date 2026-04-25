@@ -11,6 +11,7 @@ return {
       "javascript",
       "css",
       "svelte",
+      "rust",
       -- add more arguments for adding more treesitter parsers
     },
     highlight = {
